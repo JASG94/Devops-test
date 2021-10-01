@@ -7,7 +7,6 @@ pipeline {
         TAG = 'v0.1'
         HUB_SERVER = 'hub.docker.com'
         KUBECONFIG = '/home/ubuntu/.kube/config'
-        DOCKERFILE_PATH = '2'
         HUB_COMMON_CREDS = credentials('dockerhub')
     }
     stages {  
@@ -16,8 +15,7 @@ pipeline {
                 sh 'echo "build docker images..."'
                 sh '''
                     #!/bin/bash
-                    cd $DOCKERFILE_PATH
-                    ./build.sh
+                    docker build --rm -t local/simple-api:v0.1 -f 2/Dockerfile .
                 '''
             }
         } 
