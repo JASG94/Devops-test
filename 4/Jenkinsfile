@@ -10,7 +10,7 @@ pipeline {
         DOCKERFILE_PATH = '../2'
         HUB_COMMON_CREDS = credentials('dockerhub')
     }
-      
+    stages {  
         stage('Build docker image...') {
             steps {
                 sh 'echo "build docker images..."'
