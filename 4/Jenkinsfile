@@ -5,7 +5,6 @@ pipeline {
     environment {
         IMAGE = 'simple-api'
         TAG = 'v0.1'
-        HUB_SERVER = 'hub.docker.com'
         KUBECONFIG = '/home/ubuntu/.kube/config'
         HUB_COMMON_CREDS = credentials('dockerhub')
     }
@@ -23,7 +22,7 @@ pipeline {
             steps {
                 sh '''
                     #!/bin/bash
-                    /usr/bin/docker login -u $HUB_COMMON_CREDS_USR -p $HUB_COMMON_CREDS_PSW $HUB_SERVER
+                    /usr/bin/docker login -u $HUB_COMMON_CREDS_USR -p $HUB_COMMON_CREDS_PSW 
                 '''
             }
         }
@@ -31,7 +30,7 @@ pipeline {
             steps {
                 sh '''
                     #!/bin/bash
-                    /usr/bin/docker tag local/$IMAGE:$TAG $HUB_SERVER/$IMAGE:$TAG
+                    /usr/bin/docker tag local/$IMAGE:$TAG javisg94/$IMAGE:$TAG
                 '''
             }
         }   
@@ -40,7 +39,7 @@ pipeline {
             steps {
                 sh '''
                     #!/bin/bash
-                    /usr/bin/docker push $HUB_SERVER/$IMAGE:$TAG
+                    /usr/bin/docker push javisg94/$IMAGE:$TAG
                 '''
             }
         } 
