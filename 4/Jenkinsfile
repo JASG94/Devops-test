@@ -1,7 +1,7 @@
 pipeline {
-    // agent {
-    //     label 'docker'
-    // }
+    agent {
+        label 'docker'
+    }
     environment {
         IMAGE = 'simple-api'
         TAG = 'v0.1'
