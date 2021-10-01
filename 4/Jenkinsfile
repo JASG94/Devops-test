@@ -57,7 +57,7 @@ pipeline {
                 sh 'echo "Deploy workload to k8s cluster..."'
                 sh '''
                     #!/bin/bash
-                    echo 'test'
+                    kubectl --kubeconfig=$KUBECONFIG apply -f 3/
                 '''
             }
                 
