@@ -8,73 +8,72 @@ pipeline {
         HUB_SERVER = 'hub.docker.com'
         KUBECONFIG = '/home/ubuntu/kube/kubeconfig'
         DOCKERFILE_PATH = '../2'
-        HUB_COMMON_CREDS = credentials('scalewayhub')
+        HUB_COMMON_CREDS = credentials('dockerhub')
     }
     stages {
-        // stage('Clean docker images...') {
-        //     steps {
-        //         sh 'echo "remove docker images..."'
-        //         sh '''
-        //             #!/bin/bash
-        //             for i in $(/usr/bin/docker images |grep -e $IMAGE -e none | awk '{print $3}'); do                 
-        //                 /usr/bin/docker rmi -f $i
-        //             done
-        //         '''
-        //     }
-        // }         
-        stage('Build docker image...') {
+        stage('Test stage ...') {
             steps {
-                sh 'echo "build docker images..."'
+                sh 'echo "Test stage..."'
                 sh '''
                     #!/bin/bash
-                    cd $DOCKERFILE_PATH
-                    ./build.sh
-                '''
-            }
-        } 
-        stage('Login to docker registry...') {
-            steps {
-                sh '''
-                    #!/bin/bash
-                    /usr/bin/docker login -u $HUB_COMMON_CREDS_USR -p $HUB_COMMON_CREDS_PSW $HUB_SERVER
+                    echo 'test stage'
                 '''
             }
         }
-        stage('Tag docker image...') {
-            steps {
-                sh '''
-                    #!/bin/bash
-                    /usr/bin/docker tag local/$IMAGE:$TAG $HUB_SERVER/$IMAGE:$TAG
-                '''
-            }
-        }   
+      
+        // stage('Build docker image...') {
+        //     steps {
+        //         sh 'echo "build docker images..."'
+        //         sh '''
+        //             #!/bin/bash
+        //             cd $DOCKERFILE_PATH
+        //             ./build.sh
+        //         '''
+        //     }
+        // } 
+        // stage('Login to docker registry...') {
+        //     steps {
+        //         sh '''
+        //             #!/bin/bash
+        //             /usr/bin/docker login -u $HUB_COMMON_CREDS_USR -p $HUB_COMMON_CREDS_PSW $HUB_SERVER
+        //         '''
+        //     }
+        // }
+        // stage('Tag docker image...') {
+        //     steps {
+        //         sh '''
+        //             #!/bin/bash
+        //             /usr/bin/docker tag local/$IMAGE:$TAG $HUB_SERVER/$IMAGE:$TAG
+        //         '''
+        //     }
+        // }   
                
-        stage('Push docker image...') {
-            steps {
-                sh '''
-                    #!/bin/bash
-                    /usr/bin/docker push $HUB_SERVER/$IMAGE:$TAG
-                '''
-            }
-        } 
-        stage('Logout from docker registry...') {
-            steps {
-                sh '''
-                    #!/bin/bash
-                    /usr/bin/docker logout $HUB_SERVER
-                '''
-            }
-        } 
+        // stage('Push docker image...') {
+        //     steps {
+        //         sh '''
+        //             #!/bin/bash
+        //             /usr/bin/docker push $HUB_SERVER/$IMAGE:$TAG
+        //         '''
+        //     }
+        // } 
+        // stage('Logout from docker registry...') {
+        //     steps {
+        //         sh '''
+        //             #!/bin/bash
+        //             /usr/bin/docker logout $HUB_SERVER
+        //         '''
+        //     }
+        // } 
 
-        stage('Deploy workload to k8s cluster...') {             
-            steps {
-                sh 'echo "Deploy workload to k8s cluster..."'
-                sh '''
-                    #!/bin/bash
-                    kubectl --kubeconfig=$KUBECONFIG apply -f ../3
-                '''
-            }
+        // stage('Deploy workload to k8s cluster...') {             
+        //     steps {
+        //         sh 'echo "Deploy workload to k8s cluster..."'
+        //         sh '''
+        //             #!/bin/bash
+        //             kubectl --kubeconfig=$KUBECONFIG apply -f ../3
+        //         '''
+        //     }
                 
-        }   
+        // }   
     } 
 }
