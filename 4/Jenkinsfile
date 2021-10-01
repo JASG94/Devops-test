@@ -7,7 +7,7 @@ pipeline {
         TAG = 'v0.1'
         HUB_SERVER = 'hub.docker.com'
         KUBECONFIG = '/home/ubuntu/.kube/config'
-        DOCKERFILE_PATH = '../2'
+        DOCKERFILE_PATH = '/../2'
         HUB_COMMON_CREDS = credentials('dockerhub')
     }
     stages {  
